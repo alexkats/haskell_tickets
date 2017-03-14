@@ -920,10 +920,29 @@ listLeft, listRight :: ListZipper a -> ListZipper a
 listLeft  (LZ (a:as) x bs) = LZ as a (x:bs)
 listRight (LZ as x (b:bs)) = LZ (x:as) b bs
 #+END_SRC
-** [4/12]Question 16: Idris
-*** TODO Реализуйте функцию ~take~ для вектора на Idris
-*** TODO Реализуйте функцию ~filter~ для вектора на Idris
-*** TODO Реализуйте функцию ~head~ для списка на Idris, которая компилируется только с гарантированно непустыми списками.
+** [7/12]Question 16: Idris
+*** DONE Реализуйте функцию ~take~ для вектора на Idris
+#+BEGIN_SRC idris
+take : (n : Nat) \rightarrow Vect (n + m) elem \rightarrow Vect n elem
+take Z xs = []
+take (S k) (x :: xs) = x :: take k xs
+#+END_SRC
+*** DONE Реализуйте функцию ~filter~ для вектора на Idris
+#+BEGIN_SRC idris
+filter : (elem \rightarrow Bool) \rightarrow Vect len elem \rightarrow (p ** Vect p elem)
+filter p [] = ( _ ** [] )
+filter p (x::xs) =
+  let (_ ** tail) = filter p xs
+    in if p x then
+        (_ ** x::tail)
+      else
+        (_ ** tail)
+#+END_SRC
+*** DONE Реализуйте функцию ~head~ для списка на Idris, которая компилируется только с гарантированно непустыми списками.
+#+BEGIN_SRC idris
+head : Vect (S len) elem \rightarrow elem
+head (x::xs) = x
+#+END_SRC
 *** TODO Напишите тип "*зависимая пара*" на Idris
 *** TODO Что такое ~[| |]~-идиома в Idris?
 *** TODO Что такое ~!~-идиома в Idris?
